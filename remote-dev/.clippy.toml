@@ -1,0 +1,5 @@
+warn-on-all-wildcard-imports = true
+
+too-many-arguments-threshold = 7
+type-complexity-threshold = 250
+

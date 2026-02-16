@@ -1,0 +1,26 @@
+[user]
+    name = Hannam Rhee
+    email = guins_j@guins.org
+
+[core]
+    editor = nvim
+    autocrlf = input
+
+[init]
+    defaultBranch = main
+
+[pull]
+    rebase = false
+
+[alias]
+    st = status
+    co = checkout
+    br = branch
+    ci = commit
+    lg = log --oneline --graph --decorate --all
+
+[color]
+    ui = auto
+
+[core]
+    excludesfile = ~/.gitignore_global

@@ -1,0 +1,6 @@
+### Using Stow
+
+Clone to the home directory
+sudo apt install stow
+stow remote-dev
+
