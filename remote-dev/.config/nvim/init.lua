@@ -1,3 +1,33 @@
+vim.opt.rtp:prepend(vim.fn.stdpath("data") .. "/lazy/lazy.nvim")
+
+require("lazy").setup({
+  -- completion
+  { "hrsh7th/nvim-cmp" },
+  { "hrsh7th/cmp-nvim-lsp" },
+  { "hrsh7th/cmp-buffer" },
+  { "hrsh7th/cmp-path" },
+
+  -- LSP (Neovim 0.11+ has vim.lsp.config/enable built in)
+  { "neovim/nvim-lspconfig" },
+
+  -- telescope (IMPORTANT: include plenary)
+  {
+    "nvim-telescope/telescope.nvim",
+    branch = "0.1.x",
+    dependencies = { "nvim-lua/plenary.nvim" },
+  },
+
+  -- nvim-tree
+  { "nvim-tree/nvim-tree.lua", dependencies = { "nvim-tree/nvim-web-devicons" } },
+
+  -- autopairs
+  {
+    "windwp/nvim-autopairs",
+    event = "InsertEnter",
+    opts = {}, -- same as require("nvim-autopairs").setup({})
+  },
+})
+
 local cmp = require("cmp")
 
 cmp.setup({
@@ -50,7 +80,7 @@ vim.keymap.set("n", "<leader>fh", builtin.help_tags)
 vim.keymap.set("n", "<leader>gd", builtin.lsp_definitions)
 vim.keymap.set("n", "<leader>gi", builtin.lsp_implementations)
 vim.keymap.set("n", "<leader>gr", builtin.lsp_references)
--- vim.keymap.set("n", "K", vim.lsp.buf.hover)
+vim.keymap.set("n", "K", vim.lsp.buf.hover)
 
 -- diagnostic
 vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float)
@@ -75,3 +105,26 @@ vim.o.autoread = true
 vim.api.nvim_create_autocmd({ "FocusGained", "BufEnter" }, {
   command = "checktime",
 })
+
+-- lua/plugins/autopairs.lua
+return {
+  "windwp/nvim-autopairs",
+  event = "InsertEnter",
+  config = function()
+    local npairs = require("nvim-autopairs")
+    npairs.setup({
+      check_ts = true, -- nice with treesitter (Rust indentation is better)
+    })
+
+    -- Make `{<CR>` expand to:
+    -- {
+    --   |
+    -- }
+    local Rule = require("nvim-autopairs.rule")
+    npairs.add_rules({
+      Rule("{", "}", "rust"):with_cr(function()
+        return true
+      end),
+    })
+  end,
+}
