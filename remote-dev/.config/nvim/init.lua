@@ -24,7 +24,21 @@ require("lazy").setup({
   {
     "windwp/nvim-autopairs",
     event = "InsertEnter",
-    opts = {}, -- same as require("nvim-autopairs").setup({})
+    config = function()
+      local npairs = require("nvim-autopairs")
+      npairs.setup({ check_ts = true })
+  
+      -- Make `{<CR>` expand to:
+      -- {
+      --   |
+      -- }
+      local Rule = require("nvim-autopairs.rule")
+      npairs.add_rules({
+        Rule("{", "}", "rust"):with_cr(function()
+          return true
+        end),
+      })
+    end,
   },
 })
 
@@ -106,25 +120,6 @@ vim.api.nvim_create_autocmd({ "FocusGained", "BufEnter" }, {
   command = "checktime",
 })
 
--- lua/plugins/autopairs.lua
-return {
-  "windwp/nvim-autopairs",
-  event = "InsertEnter",
-  config = function()
-    local npairs = require("nvim-autopairs")
-    npairs.setup({
-      check_ts = true, -- nice with treesitter (Rust indentation is better)
-    })
-
-    -- Make `{<CR>` expand to:
-    -- {
-    --   |
-    -- }
-    local Rule = require("nvim-autopairs.rule")
-    npairs.add_rules({
-      Rule("{", "}", "rust"):with_cr(function()
-        return true
-      end),
-    })
-  end,
-}
+-- Show line numbers in the gutter
+vim.opt.number = true
+vim.opt.relativenumber = true
