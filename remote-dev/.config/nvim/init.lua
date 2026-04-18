@@ -124,3 +124,6 @@ vim.api.nvim_create_autocmd({ "FocusGained", "BufEnter" }, {
 -- Show line numbers in the gutter
 vim.opt.number = true
 vim.opt.relativenumber = true
+
+-- don't intercept mouse
+vim.opt.mouse = ""
