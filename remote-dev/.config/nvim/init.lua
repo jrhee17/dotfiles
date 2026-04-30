@@ -40,6 +40,37 @@ require("lazy").setup({
       })
     end,
   },
+  -- git signs / blame / diff
+  {
+    "lewis6991/gitsigns.nvim",
+    event = "BufReadPre",
+    opts = {
+      current_line_blame = false,
+    },
+    keys = {
+      {
+        "<leader>gb",
+        function()
+          require("gitsigns").blame()
+        end,
+        desc = "Git blame buffer",
+      },
+      {
+        "<leader>gdp",
+        function()
+          require("gitsigns").preview_hunk()
+        end,
+        desc = "Git diff preview hunk",
+      },
+      {
+        "<leader>gdf",
+        function()
+          require("gitsigns").diffthis()
+        end,
+        desc = "Git diff current file",
+      },
+    },
+  },
 })
 
 local cmp = require("cmp")
