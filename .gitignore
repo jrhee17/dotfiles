@@ -1,0 +1,5 @@
+# Rust / Cargo generated state
+.cargo/
+
+# App-generated config/cache
+remote-dev/.config/cagent/
